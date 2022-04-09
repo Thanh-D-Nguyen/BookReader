@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Kinh Lăng Nghiêm Full",
+    "uid": "78B2FF2D-3BAB-41CD-828D-4DAE8E0DA1B2",
+    "image": "cover.png",
+    "lang": "vie",
+    "fontName": "TimesNewRomanPSMT",
+    "textAligment": 0,
+    "pageColorStyle": 1,
+    "fileName":"KLN1.epub"
+  },
+  {
+    "title": "Kinh Lăng Nghiêm Việt dịch",
+    "uid": "78B2FF2D-3BAB-41CD-828D-4DAE8E0DA1B3",
+    "image": "cover.png",
+    "lang": "vie",
+    "fontName": "TimesNewRomanPSMT",
+    "textAligment": 0,
+    "pageColorStyle": 1,
+    "fileName":"KLN-dich.epub"
+  },
+  {
+    "title": "Kinh Lăng Nghiêm Giảng giải",
+    "uid": "78B2FF2D-3BAB-41CD-828D-4DAE8E0",
+    "image": "cover.png",
+    "lang": "vie",
+    "fontName": "TimesNewRomanPSMT",
+    "textAligment": 0,
+    "pageColorStyle": 1,
+    "fileName":"KLN-gianggiai2.epub"
+  },
+  {
+    "title": "Kinh Lăng Nghiêm Giảng giải from mobi",
+    "uid": "78B2FF2D-3BAB-41CD-828D-4DAE8E0DA1B4",
+    "image": "cover.png",
+    "lang": "vie",
+    "fontName": "TimesNewRomanPSMT",
+    "textAligment": 0,
+    "pageColorStyle": 1,
+    "fileName":"KLN2.epub"
+  }
+]

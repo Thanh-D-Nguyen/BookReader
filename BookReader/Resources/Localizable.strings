@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  eMarket
+
+  Created by Nguyen Van Thanh on 2021/11/27.
+  
+*/
+
+"checkout" = "Checkout(%d)";
+"yenSign" = "円";
