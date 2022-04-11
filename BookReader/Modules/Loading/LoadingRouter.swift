@@ -35,8 +35,10 @@ class LoadingRouter {
 extension LoadingRouter: LoadingRouterProtocol {
     func navigateToMain() {
         let mainView = MainRouter.loadModule()
+        let mainNavView = MainNavigationView(rootViewController: mainView)
+        mainNavView.isNavigationBarHidden = true
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-        sceneDelegate?.window?.rootViewController = mainView
+        sceneDelegate?.window?.rootViewController = mainNavView
     }
 }
 

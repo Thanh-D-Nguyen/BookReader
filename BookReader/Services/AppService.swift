@@ -9,6 +9,6 @@ import Foundation
 
 class AppService {
     class func bootstrap() {
-       
+        RealmService.shared.configuration()
     }
 }

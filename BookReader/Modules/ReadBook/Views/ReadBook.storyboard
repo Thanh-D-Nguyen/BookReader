@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Read Book View-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="ReadBookView" id="Y6W-OH-hqX" customClass="ReadBookView" customModule="BookReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FQ-I4-McO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NiB-k7-Mc5" userLabel="HeaderContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="114"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJX-p8-Qmz" customClass="ReadBookHeadView" customModule="BookReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44" width="414" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="oIf-we-hbt"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JJX-p8-Qmz" secondAttribute="trailing" id="AyT-JX-4QU"/>
+                                    <constraint firstAttribute="bottom" secondItem="JJX-p8-Qmz" secondAttribute="bottom" id="ZAT-C5-bsm"/>
+                                    <constraint firstItem="JJX-p8-Qmz" firstAttribute="leading" secondItem="NiB-k7-Mc5" secondAttribute="leading" id="gxo-h2-ukb"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P66-Lp-7d3" userLabel="FooterContainerView">
+                                <rect key="frame" x="0.0" y="783" width="414" height="113"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHm-55-HoT" customClass="ReadBookFootView" customModule="BookReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Pf7-yR-rw8"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <constraints>
+                                    <constraint firstItem="bHm-55-HoT" firstAttribute="leading" secondItem="P66-Lp-7d3" secondAttribute="leading" id="8ut-1H-HW7"/>
+                                    <constraint firstAttribute="trailing" secondItem="bHm-55-HoT" secondAttribute="trailing" id="Bqv-JB-nnp"/>
+                                    <constraint firstItem="bHm-55-HoT" firstAttribute="top" secondItem="P66-Lp-7d3" secondAttribute="top" id="V2h-iZ-jfL"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NiB-k7-Mc5" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="0Z9-cv-Y59"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="NiB-k7-Mc5" secondAttribute="trailing" id="Bsu-B2-hzb"/>
+                            <constraint firstItem="NiB-k7-Mc5" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="EsG-oL-EiY"/>
+                            <constraint firstAttribute="bottom" secondItem="P66-Lp-7d3" secondAttribute="bottom" id="F31-R9-Qed"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="bHm-55-HoT" secondAttribute="bottom" constant="19" id="HZ9-jh-JUK"/>
+                            <constraint firstItem="P66-Lp-7d3" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="JxO-Qy-sU1"/>
+                            <constraint firstItem="P66-Lp-7d3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="M4R-9y-eFz"/>
+                            <constraint firstItem="4FQ-I4-McO" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="O4w-wz-Lmd"/>
+                            <constraint firstItem="4FQ-I4-McO" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Sc6-AM-C5R"/>
+                            <constraint firstAttribute="bottom" secondItem="4FQ-I4-McO" secondAttribute="bottom" id="gqA-V1-Uq1"/>
+                            <constraint firstItem="JJX-p8-Qmz" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="wRC-CY-6aH"/>
+                            <constraint firstItem="4FQ-I4-McO" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="z80-1P-awI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bottomFotterConstraint" destination="F31-R9-Qed" id="CM7-r9-orr"/>
+                        <outlet property="footerContainerView" destination="P66-Lp-7d3" id="gOj-CV-pei"/>
+                        <outlet property="footerView" destination="bHm-55-HoT" id="hui-U9-v6Y"/>
+                        <outlet property="headerContainerView" destination="NiB-k7-Mc5" id="1Oy-Kf-iTh"/>
+                        <outlet property="headerView" destination="JJX-p8-Qmz" id="cmZ-qi-mVI"/>
+                        <outlet property="pageContainerView" destination="4FQ-I4-McO" id="dy3-j0-zLQ"/>
+                        <outlet property="topHeaderConstraint" destination="z80-1P-awI" id="SLD-SX-oHS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="108.69565217391305" y="62.946428571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

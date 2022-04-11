@@ -29,9 +29,9 @@ class MainPresenter {
 extension MainPresenter: MainPresenterProtocol {
     func viewDidLoad() {
         let bookView = EbookListRouter.loadModule()
-        view.didLoadBookView(bookView.view)
+        view.didLoadBookView(bookView)
         let mediumView = MediumListRouter.loadModule()
-        view.didLoadMediumView(mediumView.view)
+        view.didLoadMediumView(mediumView)
     }
     func viewWillAppear() {
     }

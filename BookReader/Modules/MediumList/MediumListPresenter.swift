@@ -8,7 +8,9 @@
 import Foundation
 
 protocol MediumListPresenterProtocol: AnyObject {
-    
+    var media: [Medium] { get }
+
+    func viewDidLoad()
 }
 
 class MediumListPresenter {
@@ -16,6 +18,8 @@ class MediumListPresenter {
     private let router: MediumListRouterProtocol
     private let view: MediumListViewProtocol
 
+    var media: [Medium] = []
+    
     init(router: MediumListRouterProtocol,
          view: MediumListViewProtocol,
          interactor: MediumListInteractorProtocol) {
@@ -26,5 +30,8 @@ class MediumListPresenter {
 }
 
 extension MediumListPresenter: MediumListPresenterProtocol {
-    
+    func viewDidLoad() {
+        media = MediumManangement.shared.getAll()
+        view.didLoadMedia()
+    }
 }

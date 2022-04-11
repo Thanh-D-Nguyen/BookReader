@@ -9,11 +9,16 @@ import UIKit
 
 protocol MediumListViewProtocol: AnyObject {
     
+    var mainNav: UINavigationController? { get set }
+    
+    func didLoadMedia()
 }
 
 class MediumListView: UIViewController {
 
     var presenter: MediumListPresenterProtocol!
+    
+    weak var mainNav: UINavigationController?
     
     @IBOutlet
     private weak var mediumTableView: UITableView!
@@ -22,20 +27,24 @@ class MediumListView: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         mediumTableView.registerNib(cellClass: MediumCell.self)
+        presenter.viewDidLoad()
     }
 }
 
 extension MediumListView: MediumListViewProtocol {
-    
+    func didLoadMedia() {
+        mediumTableView.reloadData()
+    }
 }
 
 extension MediumListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        presenter.media.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: MediumCell = tableView.dequeueResuableCell(forIndexPath: indexPath)
+        cell.updateMedium(presenter.media[indexPath.row])
         return cell
     }
 }

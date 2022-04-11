@@ -101,6 +101,18 @@
 		23765879280185C80088F410 /* EbookListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23765877280185C80088F410 /* EbookListCell.xib */; };
 		2376587C280187110088F410 /* MediumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376587A280187110088F410 /* MediumCell.swift */; };
 		2376587D280187110088F410 /* MediumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2376587B280187110088F410 /* MediumCell.xib */; };
+		237658802802A0040088F410 /* ReadBookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376587F2802A0040088F410 /* ReadBookInteractor.swift */; };
+		237658822802A0AA0088F410 /* ReadBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658812802A0AA0088F410 /* ReadBookRouter.swift */; };
+		237658842802A0BA0088F410 /* ReadBookPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658832802A0BA0088F410 /* ReadBookPresenter.swift */; };
+		237658862802A0D20088F410 /* ReadBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658852802A0D20088F410 /* ReadBookView.swift */; };
+		2376588A2802A27F0088F410 /* ReadBook.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 237658892802A27F0088F410 /* ReadBook.storyboard */; };
+		2376588C2802A6590088F410 /* MainNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376588B2802A6590088F410 /* MainNavigationView.swift */; };
+		237658942802AB990088F410 /* ReadBookFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2376588F2802AB980088F410 /* ReadBookFootView.xib */; };
+		237658952802AB990088F410 /* ReadBookFootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658902802AB980088F410 /* ReadBookFootView.swift */; };
+		237658962802AB990088F410 /* ReadBookHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658922802AB980088F410 /* ReadBookHeadView.swift */; };
+		237658972802AB990088F410 /* ReadBookHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 237658932802AB980088F410 /* ReadBookHeadView.xib */; };
+		237658992802B97B0088F410 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658982802B97B0088F410 /* Chapter.swift */; };
+		2376589B2802BC5D0088F410 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589A2802BC5D0088F410 /* Page.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -195,6 +207,18 @@
 		23765877280185C80088F410 /* EbookListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EbookListCell.xib; sourceTree = "<group>"; };
 		2376587A280187110088F410 /* MediumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumCell.swift; sourceTree = "<group>"; };
 		2376587B280187110088F410 /* MediumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediumCell.xib; sourceTree = "<group>"; };
+		2376587F2802A0040088F410 /* ReadBookInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookInteractor.swift; sourceTree = "<group>"; };
+		237658812802A0AA0088F410 /* ReadBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookRouter.swift; sourceTree = "<group>"; };
+		237658832802A0BA0088F410 /* ReadBookPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookPresenter.swift; sourceTree = "<group>"; };
+		237658852802A0D20088F410 /* ReadBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookView.swift; sourceTree = "<group>"; };
+		237658892802A27F0088F410 /* ReadBook.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReadBook.storyboard; sourceTree = "<group>"; };
+		2376588B2802A6590088F410 /* MainNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationView.swift; sourceTree = "<group>"; };
+		2376588F2802AB980088F410 /* ReadBookFootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadBookFootView.xib; sourceTree = "<group>"; };
+		237658902802AB980088F410 /* ReadBookFootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadBookFootView.swift; sourceTree = "<group>"; };
+		237658922802AB980088F410 /* ReadBookHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadBookHeadView.swift; sourceTree = "<group>"; };
+		237658932802AB980088F410 /* ReadBookHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadBookHeadView.xib; sourceTree = "<group>"; };
+		237658982802B97B0088F410 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		2376589A2802BC5D0088F410 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,6 +321,8 @@
 				237657D928015B340088F410 /* Book.swift */,
 				237657DB28015B340088F410 /* Bookmark.swift */,
 				237657D828015B340088F410 /* Medium.swift */,
+				237658982802B97B0088F410 /* Chapter.swift */,
+				2376589A2802BC5D0088F410 /* Page.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -309,6 +335,7 @@
 				2376586D28016CD00088F410 /* MainHeaderInteractor.swift */,
 				2376586F28016CE90088F410 /* EbookListInteractor.swift */,
 				2376587128016CFB0088F410 /* MediumListInteractor.swift */,
+				2376587F2802A0040088F410 /* ReadBookInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -345,6 +372,7 @@
 		237657B5280158230088F410 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2376587E28029F8F0088F410 /* ReadBook */,
 				23765854280168560088F410 /* MediumList */,
 				237658532801684A0088F410 /* EbookList */,
 				23765850280165B40088F410 /* MainHeader */,
@@ -444,6 +472,7 @@
 				23765848280164640088F410 /* MainPresenter.swift */,
 				2376584A280164720088F410 /* MainRouter.swift */,
 				2376584C280164980088F410 /* MainView.swift */,
+				2376588B2802A6590088F410 /* MainNavigationView.swift */,
 				2376584E280164F70088F410 /* Main.storyboard */,
 			);
 			path = Main;
@@ -484,6 +513,45 @@
 				2376587B280187110088F410 /* MediumCell.xib */,
 			);
 			path = MediumList;
+			sourceTree = "<group>";
+		};
+		2376587E28029F8F0088F410 /* ReadBook */ = {
+			isa = PBXGroup;
+			children = (
+				2376588D2802AB570088F410 /* Views */,
+				237658812802A0AA0088F410 /* ReadBookRouter.swift */,
+				237658832802A0BA0088F410 /* ReadBookPresenter.swift */,
+			);
+			path = ReadBook;
+			sourceTree = "<group>";
+		};
+		2376588D2802AB570088F410 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2376588E2802AB980088F410 /* ReadBookFoot */,
+				237658912802AB980088F410 /* ReadBookHead */,
+				237658852802A0D20088F410 /* ReadBookView.swift */,
+				237658892802A27F0088F410 /* ReadBook.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2376588E2802AB980088F410 /* ReadBookFoot */ = {
+			isa = PBXGroup;
+			children = (
+				2376588F2802AB980088F410 /* ReadBookFootView.xib */,
+				237658902802AB980088F410 /* ReadBookFootView.swift */,
+			);
+			path = ReadBookFoot;
+			sourceTree = "<group>";
+		};
+		237658912802AB980088F410 /* ReadBookHead */ = {
+			isa = PBXGroup;
+			children = (
+				237658922802AB980088F410 /* ReadBookHeadView.swift */,
+				237658932802AB980088F410 /* ReadBookHeadView.xib */,
+			);
+			path = ReadBookHead;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -558,6 +626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				237657FB28015E1C0088F410 /* books.json in Resources */,
+				2376588A2802A27F0088F410 /* ReadBook.storyboard in Resources */,
 				2376586228016B840088F410 /* MediumList.storyboard in Resources */,
 				2376579A280155960088F410 /* LaunchScreen.storyboard in Resources */,
 				237657F528015E1C0088F410 /* KLN-gianggiai2.epub in Resources */,
@@ -572,7 +641,9 @@
 				237657FA28015E1C0088F410 /* KLN-dich.epub in Resources */,
 				237657FC28015E1C0088F410 /* KLN-gianggiai.epub in Resources */,
 				2376587D280187110088F410 /* MediumCell.xib in Resources */,
+				237658972802AB990088F410 /* ReadBookHeadView.xib in Resources */,
 				23765879280185C80088F410 /* EbookListCell.xib in Resources */,
+				237658942802AB990088F410 /* ReadBookFootView.xib in Resources */,
 				237657BC280158230088F410 /* Loading.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +664,7 @@
 				237657D328015B260088F410 /* RMAppState.swift in Sources */,
 				237657E828015CFB0088F410 /* Utils.swift in Sources */,
 				237657AE280157140088F410 /* ImageView.swift in Sources */,
+				237658802802A0040088F410 /* ReadBookInteractor.swift in Sources */,
 				237657B42801572A0088F410 /* AppService.swift in Sources */,
 				2376582B28015F280088F410 /* DWAnimatedLabel.swift in Sources */,
 				2376584B280164720088F410 /* MainRouter.swift in Sources */,
@@ -601,6 +673,7 @@
 				2376578E280155950088F410 /* AppDelegate.swift in Sources */,
 				237657B0280157140088F410 /* StringExtensions.swift in Sources */,
 				2376580528015E850088F410 /* Image.swift in Sources */,
+				237658962802AB990088F410 /* ReadBookHeadView.swift in Sources */,
 				237657CE28015B260088F410 /* BookManagement.swift in Sources */,
 				237657BE280158230088F410 /* LoadingView.swift in Sources */,
 				2376582128015F280088F410 /* FRTocReference.swift in Sources */,
@@ -613,6 +686,7 @@
 				23765878280185C80088F410 /* EbookListCell.swift in Sources */,
 				2376580828015E850088F410 /* Number.swift in Sources */,
 				2376582D28015F280088F410 /* DWAnimator.swift in Sources */,
+				237658992802B97B0088F410 /* Chapter.swift in Sources */,
 				237657BD280158230088F410 /* LoadingRouter.swift in Sources */,
 				2376580928015E850088F410 /* Color.swift in Sources */,
 				2376582F28015F280088F410 /* PaddingLabel.swift in Sources */,
@@ -627,6 +701,7 @@
 				2376586828016BDC0088F410 /* MediumListRouter.swift in Sources */,
 				237657D728015B260088F410 /* AppStateManagement.swift in Sources */,
 				2376582828015F280088F410 /* FRMediaType.swift in Sources */,
+				2376588C2802A6590088F410 /* MainNavigationView.swift in Sources */,
 				23765849280164640088F410 /* MainPresenter.swift in Sources */,
 				2376585A28016A720088F410 /* MainHeaderView.swift in Sources */,
 				23765852280166F60088F410 /* MainInteractor.swift in Sources */,
@@ -642,19 +717,24 @@
 				237657D628015B260088F410 /* MediumManangement.swift in Sources */,
 				237657AD280157140088F410 /* TableViewExtensions.swift in Sources */,
 				2376582628015F280088F410 /* FRResources.swift in Sources */,
+				237658862802A0D20088F410 /* ReadBookView.swift in Sources */,
 				2376582E28015F280088F410 /* AnimatedTextManager.swift in Sources */,
 				237657D528015B260088F410 /* RMBookmark.swift in Sources */,
 				2376582528015F280088F410 /* FRSmils.swift in Sources */,
+				237658842802A0BA0088F410 /* ReadBookPresenter.swift in Sources */,
 				2376586C28016BFF0088F410 /* EbookListPresenter.swift in Sources */,
 				237657D028015B260088F410 /* DomainConvertibleType.swift in Sources */,
 				237657DE28015B340088F410 /* AppState.swift in Sources */,
 				2376586E28016CD00088F410 /* MainHeaderInteractor.swift in Sources */,
 				2376586A28016BEC0088F410 /* EbookListRouter.swift in Sources */,
+				237658822802A0AA0088F410 /* ReadBookRouter.swift in Sources */,
 				2376580728015E850088F410 /* RegularExpression.swift in Sources */,
 				237657B22801571C0088F410 /* Constants.swift in Sources */,
 				237657C02801585D0088F410 /* LoadingInteractor.swift in Sources */,
 				237657DF28015B340088F410 /* Bookmark.swift in Sources */,
+				2376589B2802BC5D0088F410 /* Page.swift in Sources */,
 				2376582328015F280088F410 /* FRSpine.swift in Sources */,
+				237658952802AB990088F410 /* ReadBookFootView.swift in Sources */,
 				2376586628016BC70088F410 /* MediumListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

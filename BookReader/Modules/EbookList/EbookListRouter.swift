@@ -8,7 +8,7 @@
 import UIKit
 
 protocol EbookListRouterProtocol: AnyObject {
-    
+    func openBookViewWith(_ book: Book)
 }
 
 class EbookListRouter {
@@ -34,5 +34,8 @@ class EbookListRouter {
 }
 
 extension EbookListRouter: EbookListRouterProtocol {
-    
+    func openBookViewWith(_ book: Book) {
+        let readBookView = ReadBookRouter.loadModule(book)
+        view?.mainNav?.pushViewController(readBookView, animated: true)
+    }
 }

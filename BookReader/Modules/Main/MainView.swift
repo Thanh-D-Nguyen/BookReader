@@ -9,8 +9,8 @@ import UIKit
 import BetterSegmentedControl
 
 protocol MainViewProtocol: AnyObject {
-    func didLoadBookView(_ view: UIView)
-    func didLoadMediumView(_ view: UIView)
+    func didLoadBookView(_ view: EbookListView)
+    func didLoadMediumView(_ view: MediumListView)
 }
 
 class MainView: UIViewController {
@@ -43,16 +43,19 @@ class MainView: UIViewController {
 }
 
 extension MainView: MainViewProtocol {
-    func didLoadBookView(_ view: UIView) {
-        bookContainerView.addAndFitSubview(view)
+    func didLoadBookView(_ view: EbookListView) {
+        view.mainNav = self.navigationController
+        bookContainerView.addAndFitSubview(view.view)
     }
-    func didLoadMediumView(_ view: UIView) {
-        mediumContainerView.addAndFitSubview(view)
+    func didLoadMediumView(_ view: MediumListView) {
+        view.mainNav = self.navigationController
+        mediumContainerView.addAndFitSubview(view.view)
     }
 }
 
 extension MainView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isTracking == false { return }
         let width = scrollView.bounds.width
         let index = Int((scrollView.contentOffset.x + (0.5 * width)) / width)
         if index != segmentedView.index {

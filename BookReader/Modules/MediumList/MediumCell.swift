@@ -8,7 +8,10 @@
 import UIKit
 
 class MediumCell: UITableViewCell {
-
+    
+    @IBOutlet private weak var mTitleLabel: UILabel!
+    @IBOutlet private weak var mImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +22,9 @@ class MediumCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    func updateMedium(_ medium: Medium) {
+        mTitleLabel.text = medium.name
+        mImageView.image = UIImage(named: medium.image)
+    }
 }
