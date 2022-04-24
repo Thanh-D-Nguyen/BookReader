@@ -31,7 +31,17 @@ class ReadBookView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        headerView.delegate = self
         presenter.viewDidLoad()
+        presenter.didUpdateParseProgress = { [weak self] progress in
+            guard let self = self else { return }
+            self.footerView.updateParseProgress(progress)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter.viewWillDisapear()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -61,5 +71,11 @@ extension ReadBookView: ReadBookViewProtocol {
             self.footerContainerView.alpha = isHidden ? 0.0 : 1.0
         }
         
+    }
+}
+
+extension ReadBookView: ReadingHeaderViewDelegate {
+    func readingHeaderView(_ view: ReadBookHeadView, tapAction action: HeaderViewAction) {
+        presenter.headerTapAction(action)
     }
 }

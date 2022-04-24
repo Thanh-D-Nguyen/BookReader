@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ReadBookRouterProtocol: AnyObject {
-    
+    func back()
 }
 
 class ReadBookRouter {
@@ -31,8 +31,19 @@ class ReadBookRouter {
         view.presenter = presenter
         return view
     }
+    
+    class func createBookPageView() -> ReadBookPageView {
+        let storyboard = UIStoryboard(name: "ReadBook", bundle: nil)
+        guard let view = storyboard.instantiateViewController(withIdentifier: "ReadBookPageView") as? ReadBookPageView else {
+            assertionFailure("Can't load view")
+            return ReadBookPageView()
+        }
+        return view
+    }
 }
 
 extension ReadBookRouter: ReadBookRouterProtocol {
-    
+    func back() {
+        view?.navigationController?.popViewController(animated: true)
+    }
 }

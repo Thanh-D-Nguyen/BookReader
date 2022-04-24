@@ -10,18 +10,29 @@ import UIKit
 
 protocol ReadBookPresenterProtocol: AnyObject {
     var statusBarHidden: Bool { get }
+    var didUpdateParseProgress: ((CGFloat) -> Void)? { get set }
     
     func viewDidLoad()
+    
+    func viewWillDisapear()
+    
+    func headerTapAction(_ action: HeaderViewAction)
 }
 
 class ReadBookPresenter: NSObject {
     private let interactor: ReadBookInteractorProtocol
     private let router: ReadBookRouterProtocol
     private let view: ReadBookViewProtocol
-
-    private var pageView: UIPageViewController!
     
+    private let bookConfig: RMBook
+    private var chapters: [Chapter] = []
+    private var readingAttributedString = NSAttributedString(string: "")
+    
+    private var pageView: UIPageViewController!
+    private var currentPageItemView: ReadBookPageView!
     var statusBarHidden: Bool = false
+    
+    var didUpdateParseProgress: ((CGFloat) -> Void)?
     
     init(router: ReadBookRouterProtocol,
          view: ReadBookViewProtocol,
@@ -29,6 +40,7 @@ class ReadBookPresenter: NSObject {
         self.router = router
         self.view = view
         self.interactor = interactor
+        self.bookConfig = interactor.getCurrentBook()
     }
 
     @objc
@@ -36,17 +48,74 @@ class ReadBookPresenter: NSObject {
         statusBarHidden = !statusBarHidden
         view.didChangeStatusBarHidden(statusBarHidden)
     }
-}
-
-extension ReadBookPresenter: ReadBookPresenterProtocol {
-    func viewDidLoad() {
+    
+    private func preparePageView() {
         pageView = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal)
         pageView.dataSource = self
         pageView.delegate = self
         view.didLoadPageView(pageView)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePageViewTap))
         pageView.view.addGestureRecognizer(tapGesture)
-        pageView.setViewControllers([UIViewController()], direction: .forward, animated: true)
+    }
+    
+    private func didParseChapter(_ chapter: Chapter, progress: CGFloat) {
+        self.didUpdateParseProgress?(progress)
+    }
+    
+    private func didFinishParseChapters(_ chapters: [Chapter]) {
+        self.chapters = chapters
+        self.updateCurrentReading()
+    }
+    
+    private func updateCurrentReading() {
+        let page = getCurrentReadingPage()
+        currentPageItemView = ReadBookRouter.createBookPageView()
+        currentPageItemView.page = page
+        self.pageView.setViewControllers([currentPageItemView], direction: .forward, animated: true)
+    }
+    
+    private func getCurrentReadingPage() -> Page? {
+        
+        let attributes = chapters[0].attributes.sorted(by: { $0.key.location < $1.key.location })
+        for (key, value) in attributes {
+            print(key, value)
+        }
+        
+        return nil
+    }
+}
+
+extension ReadBookPresenter: ReadBookPresenterProtocol {
+    func viewDidLoad() {
+        preparePageView()
+        interactor.unzipAndParse()
+        
+        interactor.parserProgress = { [weak self] chapter, progress in
+            guard let self = self else { return }
+            self.didParseChapter(chapter, progress: progress)
+        }
+        
+        interactor.finishParse = { [weak self] chapters in
+            guard let self = self else { return }
+            self.didFinishParseChapters(chapters)
+        }
+    }
+    
+    func viewWillDisapear() {
+        interactor.cancleAllParse()
+    }
+    
+    func headerTapAction(_ action: HeaderViewAction) {
+        switch action {
+        case .chapter:
+            break
+        case .styleChange:
+            break
+        case .bookmark:
+            break
+        case .close:
+            router.back()
+        }
     }
 }
 
@@ -58,12 +127,27 @@ extension ReadBookPresenter: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .blue
-        return vc
+        if let page = currentPageItemView.page {
+            let pageView = ReadBookRouter.createBookPageView()
+            let nextLoc = page.endLocation
+            let newPage = getCurrentReadingPage()
+            pageView.page = newPage
+            return pageView
+            
+        }
+        return UIViewController()
     }
 }
 
 extension ReadBookPresenter: UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let nextView = pendingViewControllers.first as? ReadBookPageView else { return }
+        currentPageItemView = nextView
+    }
     
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed { return }
+        guard let prevView = previousViewControllers.first as? ReadBookPageView else { return }
+        currentPageItemView = prevView
+    }
 }

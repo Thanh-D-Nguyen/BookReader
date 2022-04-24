@@ -11,9 +11,13 @@ class ReadBookFootView: UIView {
 
     @IBOutlet private weak var infoLabel: UILabel!
     @IBOutlet private weak var progressSlider: UISlider!
+    @IBOutlet private weak var progressView: UIProgressView!
     
     private func setupView() {
         instantiate()
+        progressSlider.isHidden = true
+        progressSlider.value = 0.0
+        progressView.progress = 0.0
     }
     
     override init(frame: CGRect) {
@@ -28,6 +32,13 @@ class ReadBookFootView: UIView {
     
     func updateInforText(_ text: String) {
         self.infoLabel.text = text
+    }
+    
+    func updateParseProgress(_ progress: CGFloat) {
+        progressView.setProgress(Float(progress), animated: true)
+        let isDone = progress >= 1.0
+        progressView.isHidden = isDone
+        progressSlider.isHidden = !isDone
     }
 
 }

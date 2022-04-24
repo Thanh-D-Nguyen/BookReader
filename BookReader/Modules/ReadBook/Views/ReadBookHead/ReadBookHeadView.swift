@@ -7,11 +7,12 @@
 
 import UIKit
 
+enum HeaderViewAction {
+    case chapter, styleChange, bookmark, close
+}
+
 protocol ReadingHeaderViewDelegate: AnyObject {
-    func readingHeaderViewDidTapChapters(_ view: ReadBookHeadView)
-    func readingHeaderViewDidTapStyleChange(_ view: ReadBookHeadView)
-    func readingHeaderViewDidTapBookmark(_ view: ReadBookHeadView)
-    func readingHeaderViewDidTapClose(_ view: ReadBookHeadView)
+    func readingHeaderView(_ view: ReadBookHeadView, tapAction action: HeaderViewAction)
 }
 
 class ReadBookHeadView: UIView {
@@ -34,22 +35,22 @@ class ReadBookHeadView: UIView {
     
     @IBAction
     private func close() {
-        delegate?.readingHeaderViewDidTapClose(self)
+        delegate?.readingHeaderView(self, tapAction: .close)
     }
     
     @IBAction
     private func actionShowChapters() {
-        delegate?.readingHeaderViewDidTapChapters(self)
+        delegate?.readingHeaderView(self, tapAction: .chapter)
     }
     
     @IBAction
     private func actionStyleChange() {
-        delegate?.readingHeaderViewDidTapStyleChange(self)
+        delegate?.readingHeaderView(self, tapAction: .styleChange)
     }
     
     @IBAction
     private func actionBookmark(sender: UIButton) {
-        delegate?.readingHeaderViewDidTapBookmark(self)
+        delegate?.readingHeaderView(self, tapAction: .bookmark)
     }
 }
 

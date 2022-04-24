@@ -9,6 +9,13 @@ import Foundation
 import UIKit
 
 protocol ReadBookInteractorProtocol: AnyObject {
+    var parserProgress: ((Chapter, CGFloat) -> Void)? { get set }
+    var finishParse: (([Chapter]) -> Void)? { get set }
+    
+    func unzipAndParse()
+    func cancleAllParse()
+    
+    func getCurrentBook() -> RMBook
 }
 
 class ReadBookInteractor {
@@ -16,7 +23,7 @@ class ReadBookInteractor {
     private let bookPath: String
     private var bookMeta: FRBook!
     private var coverImage: UIImage?
-    
+
     private var parseQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.name = "book_parse_queue"
@@ -25,15 +32,14 @@ class ReadBookInteractor {
         queue.qualityOfService = .default
         return queue
     }()
-    
-    private var chapters: [Chapter] = []
 
-    private var parseQueueId = 0
     private var currentParsedCount = 0
     private var isFinishParse = false
-    private var totalPageCount = 0
+    private var totalLocations: UInt = 0
     private var chapterCount = 0
-    private var chapterOffset = 0
+    
+    var parserProgress: ((Chapter, CGFloat) -> Void)?
+    var finishParse: (([Chapter]) -> Void)?
     
     init(book: Book) {
         self.book = book.asRealm()
@@ -41,6 +47,56 @@ class ReadBookInteractor {
         self.bookPath = bookPath
     }
     
+    func parseBookMeta() {
+        parseQueue.cancelAllOperations()
+        isFinishParse = false
+        currentParsedCount = 0
+        let resultList = NSMutableArray()
+        
+        for _ in 0 ..< chapterCount {
+            resultList.add(NSNull())
+        }
+        
+        for (index, spine) in bookMeta.spine.spineReferences.enumerated() {
+            parseQueue.addOperation { [weak self] in
+                guard let self = self else { return }
+                self.parseSpine(spine, index: index, resultList: resultList)
+            }
+        }
+    }
+    
+    private func parseSpine(_ spine: Spine, index: Int, resultList: NSMutableArray) {
+        let tocRef = self.bookMeta.tableOfContentsMap[spine.resource.href] ?? FRTocReference.init(title: "", resource: spine.resource)
+        guard let fullHref = tocRef.resource?.fullHref else {
+            return
+        }
+        let title = tocRef.title ?? ""
+        let baseUrl = URL(fileURLWithPath: fullHref)
+        let htmlParser = HTMLParseInteractor(url: baseUrl)
+        let chapter = Chapter()
+        if htmlParser.parse() {
+            chapter.title = title
+            chapter.index = self.currentParsedCount
+            chapter.locationOffset = totalLocations
+            totalLocations += htmlParser.totalLocation
+            chapter.baseUrl = fullHref
+            chapter.text = htmlParser.currentString
+            chapter.attributes = htmlParser.attributes
+        }
+        
+        DispatchQueue.main.async {
+            self.currentParsedCount += 1
+            let progress = CGFloat(self.currentParsedCount + 1) / CGFloat(self.chapterCount)
+            self.parserProgress?(chapter, progress)
+            resultList.replaceObject(at: index, with: chapter)
+            if self.currentParsedCount >= self.chapterCount {
+                self.finishParse?(resultList as! [Chapter])
+            }
+        }
+    }
+}
+
+extension ReadBookInteractor: ReadBookInteractorProtocol {
     func unzipAndParse() {
         DispatchQueue.global().async {
             if let bookMeta = try? FREpubParser().readEpub(epubPath: self.bookPath, unzipPath: Constants.bookUnzipPath) {
@@ -49,64 +105,9 @@ class ReadBookInteractor {
                     self.coverImage = UIImage(contentsOfFile: coverUrl)
                 }
                 self.chapterCount = bookMeta.spine.spineReferences.count
-                self.chapterOffset = self.chapterCount - bookMeta.flatTableOfContents.count
                 DispatchQueue.main.async {
                     self.parseBookMeta()
                 }
-            }
-        }
-    }
-}
-
-extension ReadBookInteractor: ReadBookInteractorProtocol {
-    
-}
-
-extension ReadBookInteractor {
-    func finishParse(chapterList: [AnyObject]) {
-        self.chapters.removeAll()
-        var pageOffset = 0
-        var pageCount = 0
-        for item in chapterList {
-            if !(item is Chapter) {
-                continue
-            }
-            var chapter = item as! Chapter
-            chapter.pageOffset = pageOffset
-            pageOffset += chapter.pages.count
-            pageCount += chapter.pages.count
-            self.chapters.append(chapter)
-        }
-        self.totalPageCount = pageCount
-        isFinishParse = true
-    }
-    
-    func parseChapter(_ chapter: Chapter, resultList: NSMutableArray, queueId: Int) {
-        DispatchQueue.main.async {
-            if queueId != self.parseQueueId { return }
-            self.currentParsedCount += 1
-            resultList.replaceObject(at: chapter.index, with: chapter)
-            // progress: Float(self.currentParsedCount) / Float(self.chapterCount)
-            if self.currentParsedCount >= self.chapterCount {
-                self.finishParse(chapterList: resultList as Array)
-            }
-        }
-    }
-    
-    func parseSpine(_ spine: Spine, index: Int, resultList: NSMutableArray, queueId: Int) {
-        let tocReference: FRTocReference = self.bookMeta.tableOfContentsMap[spine.resource.href] ?? FRTocReference.init(title: "", resource: spine.resource)
-        let title = tocReference.title ?? ""
-        let urlString = tocReference.resource?.fullHref ?? ""
-        let url = URL(string: urlString)!
-        let chapter = Chapter(title: title, index: index, pageOffset: 0, baseUrl: url, pages: [])
-
-        DispatchQueue.main.async {
-            if queueId != self.parseQueueId { return }
-            self.currentParsedCount += 1
-            resultList.replaceObject(at: chapter.index, with: chapter)
-//            self.parseDelegate?.book(self, currentParseProgress: Float(self.currentParsedCount) / Float(self.chapterCount))
-            if self.currentParsedCount >= self.chapterCount {
-                self.finishParse(chapterList: resultList as Array)
             }
         }
     }
@@ -115,31 +116,7 @@ extension ReadBookInteractor {
         parseQueue.cancelAllOperations()
     }
     
-    func parseBookMeta() {
-        parseQueueId += 1
-        parseQueue.cancelAllOperations()
-        isFinishParse = false
-        currentParsedCount = 0
-        // self.parseDelegate?.bookBeginParse(self)
-        let currentQueueId = parseQueueId
-        
-        let resultList = NSMutableArray()
-        
-        for _ in 0 ..< chapterCount {
-            resultList.add(NSNull())
-        }
-        if chapters.count > 0 && chapters.count == self.chapterCount {
-            for chapter in chapters {
-                parseQueue.addOperation { [weak self] in
-                    self?.parseChapter(chapter, resultList: resultList, queueId: currentQueueId)
-                }
-            }
-        } else {
-            for (index, spine) in bookMeta.spine.spineReferences.enumerated() {
-                parseQueue.addOperation { [weak self] in
-                    self?.parseSpine(spine, index: index, resultList: resultList, queueId: currentQueueId)
-                }
-            }
-        }
+    func getCurrentBook() -> RMBook {
+        return self.book
     }
 }

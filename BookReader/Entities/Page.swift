@@ -9,6 +9,8 @@ import Foundation
 
 struct Page {
     var range: NSRange
-    var offset: Int
+    var index: Int
+    var startLocation: Int
+    var endLocation: Int
     var content: NSAttributedString
 }

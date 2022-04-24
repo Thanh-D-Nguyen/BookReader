@@ -113,6 +113,10 @@
 		237658972802AB990088F410 /* ReadBookHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 237658932802AB980088F410 /* ReadBookHeadView.xib */; };
 		237658992802B97B0088F410 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237658982802B97B0088F410 /* Chapter.swift */; };
 		2376589B2802BC5D0088F410 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589A2802BC5D0088F410 /* Page.swift */; };
+		2376589D280AA35A0088F410 /* ReadBookPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589C280AA35A0088F410 /* ReadBookPageView.swift */; };
+		2376589F281524EA0088F410 /* HTMLParseInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589E281524EA0088F410 /* HTMLParseInteractor.swift */; };
+		237658A4281526020088F410 /* AXHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 237658A3281526020088F410 /* AXHTMLParser.m */; };
+		23C815D0281544F0002F5BA1 /* NSAttributeStringHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -219,6 +223,12 @@
 		237658932802AB980088F410 /* ReadBookHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadBookHeadView.xib; sourceTree = "<group>"; };
 		237658982802B97B0088F410 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		2376589A2802BC5D0088F410 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		2376589C280AA35A0088F410 /* ReadBookPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBookPageView.swift; sourceTree = "<group>"; };
+		2376589E281524EA0088F410 /* HTMLParseInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParseInteractor.swift; sourceTree = "<group>"; };
+		237658A1281526020088F410 /* BookReader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BookReader-Bridging-Header.h"; sourceTree = "<group>"; };
+		237658A2281526020088F410 /* AXHTMLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXHTMLParser.h; sourceTree = "<group>"; };
+		237658A3281526020088F410 /* AXHTMLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AXHTMLParser.m; sourceTree = "<group>"; };
+		23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributeStringHTML.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,6 +346,7 @@
 				2376586F28016CE90088F410 /* EbookListInteractor.swift */,
 				2376587128016CFB0088F410 /* MediumListInteractor.swift */,
 				2376587F2802A0040088F410 /* ReadBookInteractor.swift */,
+				2376589E281524EA0088F410 /* HTMLParseInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -365,6 +376,7 @@
 				237657AC280157140088F410 /* StringExtensions.swift */,
 				237657A9280157140088F410 /* TableViewExtensions.swift */,
 				237657AB280157140088F410 /* ViewExtensions.swift */,
+				23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -429,6 +441,7 @@
 		2376580B28015F280088F410 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				237658A0281525D50088F410 /* HTMLParser */,
 				2376580C28015F280088F410 /* FREpubCore */,
 				2376581928015F280088F410 /* DWAnimatedLabel */,
 				2376581E28015F280088F410 /* PaddingLabel.swift */,
@@ -532,6 +545,7 @@
 				237658912802AB980088F410 /* ReadBookHead */,
 				237658852802A0D20088F410 /* ReadBookView.swift */,
 				237658892802A27F0088F410 /* ReadBook.storyboard */,
+				2376589C280AA35A0088F410 /* ReadBookPageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -552,6 +566,16 @@
 				237658932802AB980088F410 /* ReadBookHeadView.xib */,
 			);
 			path = ReadBookHead;
+			sourceTree = "<group>";
+		};
+		237658A0281525D50088F410 /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				237658A2281526020088F410 /* AXHTMLParser.h */,
+				237658A3281526020088F410 /* AXHTMLParser.m */,
+				237658A1281526020088F410 /* BookReader-Bridging-Header.h */,
+			);
+			path = HTMLParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,6 +617,7 @@
 				TargetAttributes = {
 					23765789280155950088F410 = {
 						CreatedOnToolsVersion = 13.3;
+						LastSwiftMigration = 1330;
 					};
 				};
 			};
@@ -670,6 +695,7 @@
 				2376584B280164720088F410 /* MainRouter.swift in Sources */,
 				2376584D280164980088F410 /* MainView.swift in Sources */,
 				237657D128015B260088F410 /* BookmarkManagement.swift in Sources */,
+				2376589F281524EA0088F410 /* HTMLParseInteractor.swift in Sources */,
 				2376578E280155950088F410 /* AppDelegate.swift in Sources */,
 				237657B0280157140088F410 /* StringExtensions.swift in Sources */,
 				2376580528015E850088F410 /* Image.swift in Sources */,
@@ -695,8 +721,10 @@
 				2376585E28016B530088F410 /* EbookListView.swift in Sources */,
 				237657EA28015CFB0088F410 /* MediaConverter.swift in Sources */,
 				237657D428015B260088F410 /* RMBook.swift in Sources */,
+				2376589D280AA35A0088F410 /* ReadBookPageView.swift in Sources */,
 				2376581F28015F280088F410 /* FREpubParser.swift in Sources */,
 				2376586428016BAD0088F410 /* MediumListView.swift in Sources */,
+				237658A4281526020088F410 /* AXHTMLParser.m in Sources */,
 				2376582A28015F280088F410 /* FRMetadata.swift in Sources */,
 				2376586828016BDC0088F410 /* MediumListRouter.swift in Sources */,
 				237657D728015B260088F410 /* AppStateManagement.swift in Sources */,
@@ -706,6 +734,7 @@
 				2376585A28016A720088F410 /* MainHeaderView.swift in Sources */,
 				23765852280166F60088F410 /* MainInteractor.swift in Sources */,
 				2376580628015E850088F410 /* AVAsset.swift in Sources */,
+				23C815D0281544F0002F5BA1 /* NSAttributeStringHTML.swift in Sources */,
 				2376580A28015E850088F410 /* Sequence.swift in Sources */,
 				2376582228015F280088F410 /* FRStringExtension.swift in Sources */,
 				237657E928015CFB0088F410 /* Enums.swift in Sources */,
@@ -872,6 +901,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFGNZ488T7;
@@ -889,6 +919,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ds.BookReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BookReader/Vendors/HTMLParser/BookReader-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -899,6 +931,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFGNZ488T7;
@@ -916,6 +949,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ds.BookReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BookReader/Vendors/HTMLParser/BookReader-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
