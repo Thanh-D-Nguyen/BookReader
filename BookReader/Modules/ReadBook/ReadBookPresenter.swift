@@ -62,9 +62,10 @@ class ReadBookPresenter: NSObject {
         self.didUpdateParseProgress?(progress)
     }
     
-    private func didFinishParseChapters(_ chapters: [Chapter]) {
+    private func didFinishParseChapters(_ chapters: [Chapter], totalLocation: Int) {
         self.chapters = chapters
         self.updateCurrentReading()
+        print("totalLocation", totalLocation)
     }
     
     private func updateCurrentReading() {
@@ -76,12 +77,11 @@ class ReadBookPresenter: NSObject {
     
     private func getCurrentReadingPage() -> Page? {
         
-        let attributes = chapters[0].attributes.sorted(by: { $0.key.location < $1.key.location })
-        for (key, value) in attributes {
-            print(key, value)
-        }
+        readingAttributedString = chapters[1].attributesText
         
-        return nil
+        let page = Page(range: NSRange(location: 0, length: 0), index: 1, startLocation: 0, endLocation: 400, content: readingAttributedString)
+        
+        return page
     }
 }
 
@@ -95,9 +95,9 @@ extension ReadBookPresenter: ReadBookPresenterProtocol {
             self.didParseChapter(chapter, progress: progress)
         }
         
-        interactor.finishParse = { [weak self] chapters in
+        interactor.finishParse = { [weak self] chapters, totalLocation in
             guard let self = self else { return }
-            self.didFinishParseChapters(chapters)
+            self.didFinishParseChapters(chapters, totalLocation: totalLocation)
         }
     }
     

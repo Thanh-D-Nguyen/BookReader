@@ -10,7 +10,7 @@ import UIKit
 
 protocol ReadBookInteractorProtocol: AnyObject {
     var parserProgress: ((Chapter, CGFloat) -> Void)? { get set }
-    var finishParse: (([Chapter]) -> Void)? { get set }
+    var finishParse: (([Chapter], Int) -> Void)? { get set }
     
     func unzipAndParse()
     func cancleAllParse()
@@ -35,11 +35,13 @@ class ReadBookInteractor {
 
     private var currentParsedCount = 0
     private var isFinishParse = false
-    private var totalLocations: UInt = 0
+    private var totalLocations: Int = 0
     private var chapterCount = 0
     
     var parserProgress: ((Chapter, CGFloat) -> Void)?
-    var finishParse: (([Chapter]) -> Void)?
+    
+    /// Chapter, total location
+    var finishParse: (([Chapter], Int) -> Void)?
     
     init(book: Book) {
         self.book = book.asRealm()
@@ -72,16 +74,15 @@ class ReadBookInteractor {
         }
         let title = tocRef.title ?? ""
         let baseUrl = URL(fileURLWithPath: fullHref)
-        let htmlParser = HTMLParseInteractor(url: baseUrl)
         let chapter = Chapter()
-        if htmlParser.parse() {
+        let parser = DTHTMLParserInteractor(url: baseUrl)
+        if parser.parse() {
             chapter.title = title
             chapter.index = self.currentParsedCount
             chapter.locationOffset = totalLocations
-            totalLocations += htmlParser.totalLocation
+            totalLocations += parser.totalLocation
             chapter.baseUrl = fullHref
-            chapter.text = htmlParser.currentString
-            chapter.attributes = htmlParser.attributes
+            chapter.text = parser.currentString
         }
         
         DispatchQueue.main.async {
@@ -90,7 +91,7 @@ class ReadBookInteractor {
             self.parserProgress?(chapter, progress)
             resultList.replaceObject(at: index, with: chapter)
             if self.currentParsedCount >= self.chapterCount {
-                self.finishParse?(resultList as! [Chapter])
+                self.finishParse?(resultList as! [Chapter], self.totalLocations)
             }
         }
     }
