@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2318D155281BBFF00043323D /* DTHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2318D152281BBFF00043323D /* DTHTMLParser.m */; };
-		2318D157281BC1C80043323D /* DTHTMLParserInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2318D156281BC1C80043323D /* DTHTMLParserInteractor.swift */; };
 		2376578E280155950088F410 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376578D280155950088F410 /* AppDelegate.swift */; };
 		23765790280155950088F410 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376578F280155950088F410 /* SceneDelegate.swift */; };
 		23765797280155960088F410 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23765796280155960088F410 /* Assets.xcassets */; };
@@ -122,10 +120,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2318D152281BBFF00043323D /* DTHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHTMLParser.m; sourceTree = "<group>"; };
-		2318D153281BBFF00043323D /* DTWeakSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTWeakSupport.h; sourceTree = "<group>"; };
-		2318D154281BBFF00043323D /* DTHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHTMLParser.h; sourceTree = "<group>"; };
-		2318D156281BC1C80043323D /* DTHTMLParserInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTHTMLParserInteractor.swift; sourceTree = "<group>"; };
 		2376578A280155950088F410 /* BookReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2376578D280155950088F410 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2376578F280155950088F410 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -253,16 +247,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2318D151281BBFA00043323D /* DTHTMLParser */ = {
-			isa = PBXGroup;
-			children = (
-				2318D154281BBFF00043323D /* DTHTMLParser.h */,
-				2318D152281BBFF00043323D /* DTHTMLParser.m */,
-				2318D153281BBFF00043323D /* DTWeakSupport.h */,
-			);
-			path = DTHTMLParser;
-			sourceTree = "<group>";
-		};
 		23765781280155940088F410 = {
 			isa = PBXGroup;
 			children = (
@@ -363,7 +347,6 @@
 				2376587128016CFB0088F410 /* MediumListInteractor.swift */,
 				2376587F2802A0040088F410 /* ReadBookInteractor.swift */,
 				2376589E281524EA0088F410 /* HTMLParseInteractor.swift */,
-				2318D156281BC1C80043323D /* DTHTMLParserInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -458,7 +441,6 @@
 		2376580B28015F280088F410 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				2318D151281BBFA00043323D /* DTHTMLParser */,
 				237658A0281525D50088F410 /* HTMLParser */,
 				2376580C28015F280088F410 /* FREpubCore */,
 				2376581928015F280088F410 /* DWAnimatedLabel */,
@@ -778,13 +760,11 @@
 				2376580728015E850088F410 /* RegularExpression.swift in Sources */,
 				237657B22801571C0088F410 /* Constants.swift in Sources */,
 				237657C02801585D0088F410 /* LoadingInteractor.swift in Sources */,
-				2318D157281BC1C80043323D /* DTHTMLParserInteractor.swift in Sources */,
 				237657DF28015B340088F410 /* Bookmark.swift in Sources */,
 				2376589B2802BC5D0088F410 /* Page.swift in Sources */,
 				2376582328015F280088F410 /* FRSpine.swift in Sources */,
 				237658952802AB990088F410 /* ReadBookFootView.swift in Sources */,
 				2376586628016BC70088F410 /* MediumListPresenter.swift in Sources */,
-				2318D155281BBFF00043323D /* DTHTMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

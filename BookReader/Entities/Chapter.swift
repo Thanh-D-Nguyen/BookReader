@@ -13,14 +13,8 @@ class Chapter: NSObject {
     var locationOffset: Int = 0
     var baseUrl: String = ""
     var text: String = ""
-    var attributes: [NSRange: [HTMLAttributeItem]] = [:]
-    
-    var attributesText: NSAttributedString {
-        let attText = NSMutableAttributedString(string: text)
-        return attText
-    }
     
     override var description: String {
-        return title + " - index \(index) - " + text
+        return title + " - index \(index) - offset \(locationOffset)"
     }
 }

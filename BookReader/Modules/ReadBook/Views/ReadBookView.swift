@@ -37,6 +37,11 @@ class ReadBookView: UIViewController {
             guard let self = self else { return }
             self.footerView.updateParseProgress(progress)
         }
+        
+        presenter.didUpdateSliderLocation = {  [weak self] currentLoc, totalLoc in
+            guard let self = self else { return }
+            self.footerView.updateCurrentLoc(currentLoc, totalLoc: totalLoc)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,11 +71,14 @@ extension ReadBookView: ReadBookViewProtocol {
     
     func didChangeStatusBarHidden(_ isHidden: Bool) {
         setNeedsStatusBarAppearanceUpdate()
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseInOut) {
             self.headerContainerView.alpha = isHidden ? 0.0 : 1.0
             self.footerContainerView.alpha = isHidden ? 0.0 : 1.0
+        } completion: { flag in
+            if flag, isHidden {
+                self.presenter.scrollTextToTop()
+            }
         }
-        
     }
 }
 

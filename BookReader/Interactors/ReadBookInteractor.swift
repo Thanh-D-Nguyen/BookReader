@@ -15,11 +15,11 @@ protocol ReadBookInteractorProtocol: AnyObject {
     func unzipAndParse()
     func cancleAllParse()
     
-    func getCurrentBook() -> RMBook
+    func getCurrentBook() -> Book
 }
 
 class ReadBookInteractor {
-    private let book: RMBook
+    private let book: Book
     private let bookPath: String
     private var bookMeta: FRBook!
     private var coverImage: UIImage?
@@ -44,7 +44,7 @@ class ReadBookInteractor {
     var finishParse: (([Chapter], Int) -> Void)?
     
     init(book: Book) {
-        self.book = book.asRealm()
+        self.book = book
         let bookPath = Bundle.main.path(forResource: book.fileName, ofType: nil)!
         self.bookPath = bookPath
     }
@@ -75,7 +75,7 @@ class ReadBookInteractor {
         let title = tocRef.title ?? ""
         let baseUrl = URL(fileURLWithPath: fullHref)
         let chapter = Chapter()
-        let parser = DTHTMLParserInteractor(url: baseUrl)
+        let parser = HTMLParseInteractor(url: baseUrl)
         if parser.parse() {
             chapter.title = title
             chapter.index = self.currentParsedCount
@@ -117,7 +117,7 @@ extension ReadBookInteractor: ReadBookInteractorProtocol {
         parseQueue.cancelAllOperations()
     }
     
-    func getCurrentBook() -> RMBook {
+    func getCurrentBook() -> Book {
         return self.book
     }
 }

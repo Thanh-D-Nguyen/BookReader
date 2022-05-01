@@ -17,6 +17,7 @@ class ReadBookFootView: UIView {
         instantiate()
         progressSlider.isHidden = true
         progressSlider.value = 0.0
+        progressSlider.minimumValue = 0.0
         progressView.progress = 0.0
     }
     
@@ -30,8 +31,10 @@ class ReadBookFootView: UIView {
         setupView()
     }
     
-    func updateInforText(_ text: String) {
-        self.infoLabel.text = text
+    func updateCurrentLoc(_ currentLoc: Int, totalLoc: Int) {
+        self.infoLabel.text = Utils.formatLocation(currentLoc, total: totalLoc)
+        self.progressSlider.value = Float(currentLoc)
+        progressSlider.maximumValue = Float(totalLoc)
     }
     
     func updateParseProgress(_ progress: CGFloat) {

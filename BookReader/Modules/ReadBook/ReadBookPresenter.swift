@@ -11,12 +11,15 @@ import UIKit
 protocol ReadBookPresenterProtocol: AnyObject {
     var statusBarHidden: Bool { get }
     var didUpdateParseProgress: ((CGFloat) -> Void)? { get set }
+    var didUpdateSliderLocation: ((Int, Int) -> Void)? { get set }
     
     func viewDidLoad()
     
     func viewWillDisapear()
     
     func headerTapAction(_ action: HeaderViewAction)
+    
+    func scrollTextToTop()
 }
 
 class ReadBookPresenter: NSObject {
@@ -24,15 +27,18 @@ class ReadBookPresenter: NSObject {
     private let router: ReadBookRouterProtocol
     private let view: ReadBookViewProtocol
     
-    private let bookConfig: RMBook
+    private let bookConfig: Book
     private var chapters: [Chapter] = []
     private var readingAttributedString = NSAttributedString(string: "")
     
     private var pageView: UIPageViewController!
     private var currentPageItemView: ReadBookPageView!
+    
+    private var readingChapter = 0
     var statusBarHidden: Bool = false
     
     var didUpdateParseProgress: ((CGFloat) -> Void)?
+    var didUpdateSliderLocation: ((Int, Int) -> Void)?
     
     init(router: ReadBookRouterProtocol,
          view: ReadBookViewProtocol,
@@ -41,6 +47,7 @@ class ReadBookPresenter: NSObject {
         self.view = view
         self.interactor = interactor
         self.bookConfig = interactor.getCurrentBook()
+        readingChapter = 1
     }
 
     @objc
@@ -59,13 +66,29 @@ class ReadBookPresenter: NSObject {
     }
     
     private func didParseChapter(_ chapter: Chapter, progress: CGFloat) {
-        self.didUpdateParseProgress?(progress)
+        self.didUpdateParseProgress?(progress - 0.2)
+    }
+    
+    private func prepareReadingChapter() {
+        let url = URL(fileURLWithPath: chapters[readingChapter].baseUrl)
+        guard let attributedString = try? NSMutableAttributedString.init(url: url, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+            return
+        }
+        attributedString.enumerateAttributes(in: NSRange(location: 0, length: attributedString.length), options: .longestEffectiveRangeNotRequired) { atts, range, _ in
+            if let font = atts[.font] as? UIFont {
+                let replaceFont = bookConfig.font.withSize(font.pointSize * 2.5)
+                attributedString.addAttribute(.font, value: replaceFont, range: range)
+            }
+        }
+        readingAttributedString = attributedString
     }
     
     private func didFinishParseChapters(_ chapters: [Chapter], totalLocation: Int) {
         self.chapters = chapters
+        prepareReadingChapter()
+        self.didUpdateParseProgress?(1.0)
         self.updateCurrentReading()
-        print("totalLocation", totalLocation)
+        didUpdateSliderLocation?(0, totalLocation)
     }
     
     private func updateCurrentReading() {
@@ -76,11 +99,7 @@ class ReadBookPresenter: NSObject {
     }
     
     private func getCurrentReadingPage() -> Page? {
-        
-        readingAttributedString = chapters[1].attributesText
-        
         let page = Page(range: NSRange(location: 0, length: 0), index: 1, startLocation: 0, endLocation: 400, content: readingAttributedString)
-        
         return page
     }
 }
@@ -97,7 +116,9 @@ extension ReadBookPresenter: ReadBookPresenterProtocol {
         
         interactor.finishParse = { [weak self] chapters, totalLocation in
             guard let self = self else { return }
-            self.didFinishParseChapters(chapters, totalLocation: totalLocation)
+            DispatchQueue.main.async {
+                self.didFinishParseChapters(chapters, totalLocation: totalLocation)
+            }
         }
     }
     
@@ -117,6 +138,12 @@ extension ReadBookPresenter: ReadBookPresenterProtocol {
             router.back()
         }
     }
+    
+    func scrollTextToTop() {
+        if let currentVC = currentPageItemView {
+            currentVC.scrollTextToTop()
+        }
+    }
 }
 
 extension ReadBookPresenter: UIPageViewControllerDataSource {
@@ -129,13 +156,13 @@ extension ReadBookPresenter: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let page = currentPageItemView.page {
             let pageView = ReadBookRouter.createBookPageView()
-            let nextLoc = page.endLocation
             let newPage = getCurrentReadingPage()
             pageView.page = newPage
+            readingChapter += 1
             return pageView
             
         }
-        return UIViewController()
+        return nil
     }
 }
 
