@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import DTCoreText
 
 class DTHTMLParserInteractor: NSObject {
     
@@ -30,7 +29,7 @@ class DTHTMLParserInteractor: NSObject {
 }
 
 extension DTHTMLParserInteractor: DTHTMLParserDelegate {
-    func parser(_ parser: DTHTMLParser, foundCharacters string: String, range: NSRange) {
+    func parser(_ parser: DTHTMLParser, foundCharacters string: String) {
         currentString += string
     }
 }

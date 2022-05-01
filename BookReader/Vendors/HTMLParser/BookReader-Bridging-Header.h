@@ -3,3 +3,7 @@
 //
 
 #import "AXHTMLParser.h"
+#import "DTHTMLParser.h"
+#import "NSAttributedString+HTML.h"
+#import "DTRichTextEditorView.h"
+#import "DTCoreTextLayouter.h"

@@ -19,7 +19,7 @@ enum ReadingPageColorStyle: Int {
         case .light:
             return UIColor(rgb: 0xF8F8F8)
         case .harmony:
-            return UIColor(rgb: 0xE9E6D7)
+            return .black// UIColor(rgb: 0xE9E6D7)
         case .dark1:
             return UIColor(rgb: 0x373737)
         case .dark2:

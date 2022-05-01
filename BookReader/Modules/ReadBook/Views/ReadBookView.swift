@@ -37,6 +37,16 @@ class ReadBookView: UIViewController {
             guard let self = self else { return }
             self.footerView.updateParseProgress(progress)
         }
+        
+        presenter.didUpdateSlider = { [weak self] text in
+            guard let self = self else { return }
+            self.footerView.updateInforText(text)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        didChangeStatusBarHidden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

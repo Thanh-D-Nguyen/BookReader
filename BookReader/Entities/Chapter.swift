@@ -21,6 +21,6 @@ class Chapter: NSObject {
     }
     
     override var description: String {
-        return title + " - index \(index) - " + text
+        return "index: \(index) baseURL: \(baseUrl)"
     }
 }

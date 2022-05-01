@@ -96,7 +96,7 @@ extension Book {
             return .zero
         }
         var resultRect = CGRect(origin: .zero, size: Book.windowSize)
-        resultRect = resultRect.inset(by: UIEdgeInsets(top: verticalSpacing, left: horizontalSpacing, bottom: verticalSpacing, right: horizontalSpacing))
+        resultRect = resultRect.inset(by: UIEdgeInsets(top: verticalSpacing, left: horizontalSpacing, bottom: verticalSpacing + 41, right: horizontalSpacing))
         return resultRect.size
     }
     var font: UIFont {

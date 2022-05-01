@@ -37,6 +37,7 @@ class EbookListPresenter {
 extension EbookListPresenter: EbookListPresenterProtocol {
     func viewDidLoad() {
         books = BookManagement.shared.getAll()
+        print("----->>>", books[2])
         view.didLoadBooks()
     }
     

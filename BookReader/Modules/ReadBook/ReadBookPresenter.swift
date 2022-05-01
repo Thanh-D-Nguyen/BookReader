@@ -12,6 +12,8 @@ protocol ReadBookPresenterProtocol: AnyObject {
     var statusBarHidden: Bool { get }
     var didUpdateParseProgress: ((CGFloat) -> Void)? { get set }
     
+    var didUpdateSlider: ((String) -> Void)? { get set }
+    
     func viewDidLoad()
     
     func viewWillDisapear()
@@ -21,18 +23,19 @@ protocol ReadBookPresenterProtocol: AnyObject {
 
 class ReadBookPresenter: NSObject {
     private let interactor: ReadBookInteractorProtocol
+    private var pagingInteractor: AttributedStringPagingInteractor!
     private let router: ReadBookRouterProtocol
     private let view: ReadBookViewProtocol
     
-    private let bookConfig: RMBook
+    private let bookConfig: Book
     private var chapters: [Chapter] = []
-    private var readingAttributedString = NSAttributedString(string: "")
     
     private var pageView: UIPageViewController!
     private var currentPageItemView: ReadBookPageView!
     var statusBarHidden: Bool = false
     
     var didUpdateParseProgress: ((CGFloat) -> Void)?
+    var didUpdateSlider: ((String) -> Void)?
     
     init(router: ReadBookRouterProtocol,
          view: ReadBookViewProtocol,
@@ -65,23 +68,39 @@ class ReadBookPresenter: NSObject {
     private func didFinishParseChapters(_ chapters: [Chapter], totalLocation: Int) {
         self.chapters = chapters
         self.updateCurrentReading()
-        print("totalLocation", totalLocation)
+        let progressString = Utils.formatLocation(0, total: totalLocation)
+        self.didUpdateSlider?(progressString)
     }
     
+    private func htmlAttributedString(with htmlData: Data) -> NSMutableAttributedString {
+        let baseUrl = URL(fileURLWithPath: chapters[1].baseUrl)
+        let options: [String : Any] = [
+            NSBaseURLDocumentOption: baseUrl,
+            DTDefaultFontName: bookConfig.fontName,
+            DTMaxImageSize: Book.windowSize,
+            NSTextSizeMultiplierDocumentOption: 2.5,
+            DTDefaultLineHeightMultiplier: bookConfig.lineHeightMultiple,
+            DTDefaultLinkColor: bookConfig.linkColor,
+            DTDefaultTextColor: bookConfig.pageStyle.textColor,
+            DTDefaultFontSize: bookConfig.fontSize
+        ]
+        let htmlString = NSAttributedString.init(htmlData: htmlData, options: options, documentAttributes: nil).mutableCopy() as! NSMutableAttributedString
+        return htmlString
+    }
+
     private func updateCurrentReading() {
-        let page = getCurrentReadingPage()
-        currentPageItemView = ReadBookRouter.createBookPageView()
-        currentPageItemView.page = page
-        self.pageView.setViewControllers([currentPageItemView], direction: .forward, animated: true)
-    }
-    
-    private func getCurrentReadingPage() -> Page? {
+        let urlString = chapters[1].baseUrl
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: urlString)) {
+            let attString = htmlAttributedString(with: data)
+            pagingInteractor = AttributedStringPagingInteractor(attString: attString, pageSize: bookConfig.pageSize)
+        }
         
-        readingAttributedString = chapters[1].attributesText
-        
-        let page = Page(range: NSRange(location: 0, length: 0), index: 1, startLocation: 0, endLocation: 400, content: readingAttributedString)
-        
-        return page
+        if let pagingInteractor = pagingInteractor {
+            currentPageItemView = ReadBookRouter.createBookPageView()
+            let nextPage = pagingInteractor.getNextPageFromRange(NSRange(location: 0, length: 0))
+            currentPageItemView.page = nextPage
+            self.pageView.setViewControllers([currentPageItemView], direction: .forward, animated: true)
+        }
     }
 }
 
@@ -127,15 +146,15 @@ extension ReadBookPresenter: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let page = currentPageItemView.page {
+        if let page = currentPageItemView.page,
+            let pagingInteractor = pagingInteractor {
             let pageView = ReadBookRouter.createBookPageView()
-            let nextLoc = page.endLocation
-            let newPage = getCurrentReadingPage()
+            let currentRange = page.range
+            let newPage = pagingInteractor.getNextPageFromRange(currentRange)
             pageView.page = newPage
             return pageView
-            
         }
-        return UIViewController()
+        return nil
     }
 }
 
