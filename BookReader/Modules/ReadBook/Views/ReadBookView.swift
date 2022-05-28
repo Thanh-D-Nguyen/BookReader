@@ -60,6 +60,11 @@ class ReadBookView: UIViewController {
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
+    
+    @IBAction
+    private func footerViewLocationChanged(_ sender: ReadBookFootView) {
+        presenter.navigateToLocation(Int(sender.location))
+    }
 }
 
 extension ReadBookView: ReadBookViewProtocol {
@@ -74,10 +79,6 @@ extension ReadBookView: ReadBookViewProtocol {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseInOut) {
             self.headerContainerView.alpha = isHidden ? 0.0 : 1.0
             self.footerContainerView.alpha = isHidden ? 0.0 : 1.0
-        } completion: { flag in
-            if flag, isHidden {
-                self.presenter.scrollTextToTop()
-            }
         }
     }
 }

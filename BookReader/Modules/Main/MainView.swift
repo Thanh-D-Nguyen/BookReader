@@ -54,12 +54,8 @@ extension MainView: MainViewProtocol {
 }
 
 extension MainView: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isTracking == false { return }
-        let width = scrollView.bounds.width
-        let index = Int((scrollView.contentOffset.x + (0.5 * width)) / width)
-        if index != segmentedView.index {
-            segmentedView.setIndex(index)
-        }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let index = scrollView.getCurrentScrollIndex(pageCount: segmentedView.segments.count)
+        segmentedView.setIndex(index)
     }
 }

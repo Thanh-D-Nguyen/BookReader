@@ -31,6 +31,10 @@
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7r1-9M-RaR">
                             <rect key="frame" x="6" y="32.5" width="363" height="31"/>
+                            <connections>
+                                <action selector="sliderValueChanged" destination="-1" eventType="valueChanged" id="HgT-BH-c7a"/>
+                                <action selector="sliderValueTouchUpInside" destination="-1" eventType="touchUpInside" id="Cmp-2M-2Q9"/>
+                            </connections>
                         </slider>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EyB-59-KGI">
                             <rect key="frame" x="8" y="45.5" width="359" height="4"/>

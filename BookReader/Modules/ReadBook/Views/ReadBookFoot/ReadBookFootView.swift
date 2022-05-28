@@ -7,11 +7,13 @@
 
 import UIKit
 
-class ReadBookFootView: UIView {
+class ReadBookFootView: UIControl {
 
     @IBOutlet private weak var infoLabel: UILabel!
     @IBOutlet private weak var progressSlider: UISlider!
     @IBOutlet private weak var progressView: UIProgressView!
+    
+    private(set) var location: Float = 0
     
     private func setupView() {
         instantiate()
@@ -42,6 +44,17 @@ class ReadBookFootView: UIView {
         let isDone = progress >= 1.0
         progressView.isHidden = isDone
         progressSlider.isHidden = !isDone
+    }
+    
+    @IBAction
+    private func sliderValueChanged() {
+        location = progressSlider.value
+        infoLabel.text = Utils.formatLocation(Int(location), total: Int(progressSlider.maximumValue))
+    }
+    
+    @IBAction
+    private func sliderValueTouchUpInside() {
+        sendActions(for: .touchUpInside)
     }
 
 }

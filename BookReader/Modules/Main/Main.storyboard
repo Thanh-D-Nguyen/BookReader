@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,32 +18,32 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUU-aS-FbT" userLabel="HeaderView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9K-2F-UjY" userLabel="SegmentedView" customClass="BetterSegmentedControl" customModule="BetterSegmentedControl">
-                                <rect key="frame" x="0.0" y="94" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="25"/>
                                 <color key="backgroundColor" red="1" green="0.37581839531661099" blue="0.11699009569563279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="M71-Uv-VYp"/>
+                                    <constraint firstAttribute="height" constant="25" id="M71-Uv-VYp"/>
                                 </constraints>
                                 <connections>
                                     <action selector="segmentIndexChanged:" destination="G0E-be-yKs" eventType="valueChanged" id="CU6-3w-fXG"/>
                                 </connections>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-vS-iZj">
-                                <rect key="frame" x="0.0" y="138" width="375" height="529"/>
+                                <rect key="frame" x="0.0" y="119" width="375" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xSp-CB-yyA" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="750" height="529"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="750" height="548"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugl-5h-gWL">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="529"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W64-k2-NiX">
-                                                <rect key="frame" x="375" y="0.0" width="375" height="529"/>
+                                                <rect key="frame" x="375" y="0.0" width="375" height="548"/>
                                             </containerView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Ugl-5h-gWL" secondAttribute="bottom" id="ESZ-CT-M8P"/>
                                             <constraint firstAttribute="bottom" secondItem="W64-k2-NiX" secondAttribute="bottom" id="GUU-1M-0YN"/>
@@ -74,7 +73,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C7G-6l-HXB"/>
-                        <color key="backgroundColor" systemColor="linkColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="C7G-6l-HXB" firstAttribute="trailing" secondItem="a9K-2F-UjY" secondAttribute="trailing" id="4jP-Wy-Aao"/>
                             <constraint firstItem="C7G-6l-HXB" firstAttribute="bottom" secondItem="tvE-vS-iZj" secondAttribute="bottom" id="I9c-eR-Mba"/>
@@ -102,15 +101,4 @@
             <point key="canvasLocation" x="282" y="60"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

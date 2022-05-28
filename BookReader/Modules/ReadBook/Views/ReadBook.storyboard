@@ -47,6 +47,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="Pf7-yR-rw8"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="footerViewLocationChanged:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="3IM-op-YOn"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -96,8 +99,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BN0-pO-jUj">
-                                <rect key="frame" x="0.0" y="44" width="414" height="780"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BN0-pO-jUj">
+                                <rect key="frame" x="20" y="44" width="374" height="780"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -125,12 +128,12 @@
                         <viewLayoutGuide key="safeArea" id="1aO-Kk-e0Q"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="BN0-pO-jUj" firstAttribute="leading" secondItem="1aO-Kk-e0Q" secondAttribute="leading" id="1uU-al-Yh7"/>
+                            <constraint firstAttribute="trailing" secondItem="BN0-pO-jUj" secondAttribute="trailing" constant="20" id="CgY-KX-wCP"/>
                             <constraint firstItem="HcO-iD-4RT" firstAttribute="top" secondItem="BN0-pO-jUj" secondAttribute="bottom" id="KJZ-un-att"/>
                             <constraint firstItem="1aO-Kk-e0Q" firstAttribute="trailing" secondItem="HcO-iD-4RT" secondAttribute="trailing" id="Lvr-VM-2v4"/>
                             <constraint firstItem="BN0-pO-jUj" firstAttribute="top" secondItem="1aO-Kk-e0Q" secondAttribute="top" id="NsD-sL-aRk"/>
                             <constraint firstItem="HcO-iD-4RT" firstAttribute="bottom" secondItem="1aO-Kk-e0Q" secondAttribute="bottom" id="Rm4-sh-ETH"/>
-                            <constraint firstItem="1aO-Kk-e0Q" firstAttribute="trailing" secondItem="BN0-pO-jUj" secondAttribute="trailing" id="gmu-eT-NUj"/>
+                            <constraint firstItem="BN0-pO-jUj" firstAttribute="leading" secondItem="btG-PG-v7o" secondAttribute="leading" constant="20" id="hci-BH-WWm"/>
                             <constraint firstItem="HcO-iD-4RT" firstAttribute="leading" secondItem="1aO-Kk-e0Q" secondAttribute="leading" id="i6N-5I-OY1"/>
                         </constraints>
                     </view>

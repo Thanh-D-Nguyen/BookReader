@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2318D393281E882B0043323D /* AttributedTextPagingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2318D392281E882B0043323D /* AttributedTextPagingInteractor.swift */; };
+		2318D3952822521E0043323D /* TextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2318D3942822521E0043323D /* TextViewExtension.swift */; };
 		2376578E280155950088F410 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376578D280155950088F410 /* AppDelegate.swift */; };
 		23765790280155950088F410 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376578F280155950088F410 /* SceneDelegate.swift */; };
 		23765797280155960088F410 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23765796280155960088F410 /* Assets.xcassets */; };
@@ -116,10 +118,13 @@
 		2376589D280AA35A0088F410 /* ReadBookPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589C280AA35A0088F410 /* ReadBookPageView.swift */; };
 		2376589F281524EA0088F410 /* HTMLParseInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376589E281524EA0088F410 /* HTMLParseInteractor.swift */; };
 		237658A4281526020088F410 /* AXHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 237658A3281526020088F410 /* AXHTMLParser.m */; };
+		239EAB902841EF030055F99F /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239EAB8F2841EF030055F99F /* ScrollView.swift */; };
 		23C815D0281544F0002F5BA1 /* NSAttributeStringHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2318D392281E882B0043323D /* AttributedTextPagingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextPagingInteractor.swift; sourceTree = "<group>"; };
+		2318D3942822521E0043323D /* TextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewExtension.swift; sourceTree = "<group>"; };
 		2376578A280155950088F410 /* BookReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2376578D280155950088F410 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2376578F280155950088F410 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -228,6 +233,7 @@
 		237658A1281526020088F410 /* BookReader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BookReader-Bridging-Header.h"; sourceTree = "<group>"; };
 		237658A2281526020088F410 /* AXHTMLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXHTMLParser.h; sourceTree = "<group>"; };
 		237658A3281526020088F410 /* AXHTMLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AXHTMLParser.m; sourceTree = "<group>"; };
+		239EAB8F2841EF030055F99F /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributeStringHTML.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -347,6 +353,7 @@
 				2376587128016CFB0088F410 /* MediumListInteractor.swift */,
 				2376587F2802A0040088F410 /* ReadBookInteractor.swift */,
 				2376589E281524EA0088F410 /* HTMLParseInteractor.swift */,
+				2318D392281E882B0043323D /* AttributedTextPagingInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -377,6 +384,8 @@
 				237657A9280157140088F410 /* TableViewExtensions.swift */,
 				237657AB280157140088F410 /* ViewExtensions.swift */,
 				23C815CF281544F0002F5BA1 /* NSAttributeStringHTML.swift */,
+				2318D3942822521E0043323D /* TextViewExtension.swift */,
+				239EAB8F2841EF030055F99F /* ScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -689,6 +698,7 @@
 				237657D328015B260088F410 /* RMAppState.swift in Sources */,
 				237657E828015CFB0088F410 /* Utils.swift in Sources */,
 				237657AE280157140088F410 /* ImageView.swift in Sources */,
+				2318D3952822521E0043323D /* TextViewExtension.swift in Sources */,
 				237658802802A0040088F410 /* ReadBookInteractor.swift in Sources */,
 				237657B42801572A0088F410 /* AppService.swift in Sources */,
 				2376582B28015F280088F410 /* DWAnimatedLabel.swift in Sources */,
@@ -724,6 +734,7 @@
 				2376589D280AA35A0088F410 /* ReadBookPageView.swift in Sources */,
 				2376581F28015F280088F410 /* FREpubParser.swift in Sources */,
 				2376586428016BAD0088F410 /* MediumListView.swift in Sources */,
+				239EAB902841EF030055F99F /* ScrollView.swift in Sources */,
 				237658A4281526020088F410 /* AXHTMLParser.m in Sources */,
 				2376582A28015F280088F410 /* FRMetadata.swift in Sources */,
 				2376586828016BDC0088F410 /* MediumListRouter.swift in Sources */,
@@ -765,6 +776,7 @@
 				2376582328015F280088F410 /* FRSpine.swift in Sources */,
 				237658952802AB990088F410 /* ReadBookFootView.swift in Sources */,
 				2376586628016BC70088F410 /* MediumListPresenter.swift in Sources */,
+				2318D393281E882B0043323D /* AttributedTextPagingInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

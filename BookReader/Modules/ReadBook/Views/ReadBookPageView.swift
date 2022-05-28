@@ -19,23 +19,18 @@ class ReadBookPageView: UIViewController {
         textView.contentInset = .zero
         textView.textContainerInset = .zero
         textView.delegate = self
+        textView.layoutManager.allowsNonContiguousLayout = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        textView.attributedText = page?.content
-    }
-    
-    func scrollTextToTop() {
-        textView.scrollsToTop = true
+        guard let page = page else {
+            return
+        }
+        textView.attributedText = page.content
+        locationLabel.text = page.locationInfoText
     }
 }
 
 extension ReadBookPageView: UITextViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let rect = CGRect(x: 0, y: scrollView.contentOffset.y, width: scrollView.bounds.width, height: 30)
-        let range = textView.layoutManager.glyphRange(forBoundingRect: rect, in: textView.textContainer)
-        let total = page?.content.length ?? 1
-        locationLabel.text = Utils.formatLocation(range.location, total: total)
-    }
 }

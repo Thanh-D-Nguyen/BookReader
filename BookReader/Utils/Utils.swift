@@ -28,6 +28,6 @@ class Utils {
         formatter.minimumFractionDigits = 0
         let dLoc = Int(location / 100)
         let dTotalLoc = Int(total / 100)
-        return "Loc \(dLoc) / \(dTotalLoc) " + (formatter.string(from: NSNumber(value: location / total)) ?? "0%")
+        return "Loc \(dLoc) / \(dTotalLoc) " + (formatter.string(from: NSNumber(value: CGFloat(location) / CGFloat(total))) ?? "0%")
     }
 }

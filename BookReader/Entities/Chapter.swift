@@ -15,6 +15,6 @@ class Chapter: NSObject {
     var text: String = ""
     
     override var description: String {
-        return title + " - index \(index) - offset \(locationOffset)"
+        return title + " - index \(index) - offset \(locationOffset)" + baseUrl
     }
 }

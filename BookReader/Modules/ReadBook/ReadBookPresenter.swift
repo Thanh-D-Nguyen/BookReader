@@ -18,8 +18,7 @@ protocol ReadBookPresenterProtocol: AnyObject {
     func viewWillDisapear()
     
     func headerTapAction(_ action: HeaderViewAction)
-    
-    func scrollTextToTop()
+    func navigateToLocation(_ location: Int)
 }
 
 class ReadBookPresenter: NSObject {
@@ -29,12 +28,15 @@ class ReadBookPresenter: NSObject {
     
     private let bookConfig: Book
     private var chapters: [Chapter] = []
-    private var readingAttributedString = NSAttributedString(string: "")
+    private var readingPages: [Page] = []
+    
+    private var totalLocation: Int = 0
     
     private var pageView: UIPageViewController!
     private var currentPageItemView: ReadBookPageView!
     
     private var readingChapter = 0
+    private var readingPageInChapter = 0
     var statusBarHidden: Bool = false
     
     var didUpdateParseProgress: ((CGFloat) -> Void)?
@@ -69,9 +71,48 @@ class ReadBookPresenter: NSObject {
         self.didUpdateParseProgress?(progress - 0.2)
     }
     
+    private func pagingAttributedString(_ attString: NSAttributedString) -> [Page] {
+        if attString.length == 0 { return [] }
+        let chapterLocationOffset = chapters[readingChapter].locationOffset
+        
+        let pageModel = Page(range: .init(location: 0, length: 0), content: attString, chapterOffset: chapterLocationOffset, totalLocation: totalLocation)
+        self.readingPages = [pageModel]
+        
+        let textStorage = NSTextStorage(attributedString: attString)
+        let layoutManager = NSLayoutManager()
+        textStorage.addLayoutManager(layoutManager)
+        let textContainer = NSTextContainer(size: Book.windowSize)
+        layoutManager.addTextContainer(textContainer)
+        var visibleRange = layoutManager.glyphRange(for: textContainer)
+        
+        if visibleRange == NSRange(location: 0, length: 0) {
+            let pageModel = Page(range: .init(location: 0, length: 0), content: attString, chapterOffset: chapterLocationOffset, totalLocation: totalLocation)
+            return [pageModel]
+        }
+        var pageOffset = visibleRange.location + visibleRange.length
+        var pageList: [Page] = []
+        while pageOffset <= attString.length, pageOffset != 0 {
+            let splitContent = attString.attributedSubstring(from: visibleRange)
+            let pageModel = Page(range: visibleRange, content: splitContent, chapterOffset: chapterLocationOffset, totalLocation: totalLocation)
+            pageList.append(pageModel)
+            
+            let moreTextContainer = NSTextContainer(size: Book.windowSize)
+            layoutManager.addTextContainer(moreTextContainer)
+            let textRect = CGRect(origin: .zero, size: Book.windowSize)
+            visibleRange = layoutManager.glyphRange(forBoundingRect: textRect, in: moreTextContainer)
+            
+            if visibleRange.location == NSNotFound {
+                pageOffset = 0
+            } else {
+                pageOffset = visibleRange.location + visibleRange.length
+            }
+        }
+        return pageList
+    }
+    
     private func prepareReadingChapter() {
         let url = URL(fileURLWithPath: chapters[readingChapter].baseUrl)
-        guard let attributedString = try? NSMutableAttributedString.init(url: url, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+        guard let attributedString = try? NSMutableAttributedString(url: url, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
             return
         }
         attributedString.enumerateAttributes(in: NSRange(location: 0, length: attributedString.length), options: .longestEffectiveRangeNotRequired) { atts, range, _ in
@@ -80,10 +121,10 @@ class ReadBookPresenter: NSObject {
                 attributedString.addAttribute(.font, value: replaceFont, range: range)
             }
         }
-        readingAttributedString = attributedString
+        self.readingPages = pagingAttributedString(attributedString)
     }
     
-    private func didFinishParseChapters(_ chapters: [Chapter], totalLocation: Int) {
+    private func didFinishParseChapters(_ chapters: [Chapter]) {
         self.chapters = chapters
         prepareReadingChapter()
         self.didUpdateParseProgress?(1.0)
@@ -92,15 +133,30 @@ class ReadBookPresenter: NSObject {
     }
     
     private func updateCurrentReading() {
-        let page = getCurrentReadingPage()
+        let page = readingPages[readingPageInChapter]
         currentPageItemView = ReadBookRouter.createBookPageView()
         currentPageItemView.page = page
         self.pageView.setViewControllers([currentPageItemView], direction: .forward, animated: true)
     }
     
-    private func getCurrentReadingPage() -> Page? {
-        let page = Page(range: NSRange(location: 0, length: 0), index: 1, startLocation: 0, endLocation: 400, content: readingAttributedString)
-        return page
+    private func pageIndexInLoction(_ loc: Int) -> Int {
+        for (index, item) in readingPages.enumerated() {
+            if loc >= item.range.location && loc < item.range.location + item.range.length {
+                return index
+            }
+        }
+        return 0
+    }
+    
+    private func preparePagesAndNavigateToLocation(_ location: Int) {
+        for chapter in chapters where chapter.locationOffset >= location {
+            readingChapter = chapter.index
+            break
+        }
+        prepareReadingChapter()
+        let locationInChapter = location - chapters[readingChapter].locationOffset
+        readingPageInChapter = pageIndexInLoction(locationInChapter)
+        self.updateCurrentReading()
     }
 }
 
@@ -116,8 +172,9 @@ extension ReadBookPresenter: ReadBookPresenterProtocol {
         
         interactor.finishParse = { [weak self] chapters, totalLocation in
             guard let self = self else { return }
+            self.totalLocation = totalLocation
             DispatchQueue.main.async {
-                self.didFinishParseChapters(chapters, totalLocation: totalLocation)
+                self.didFinishParseChapters(chapters)
             }
         }
     }
@@ -139,30 +196,32 @@ extension ReadBookPresenter: ReadBookPresenterProtocol {
         }
     }
     
-    func scrollTextToTop() {
-        if let currentVC = currentPageItemView {
-            currentVC.scrollTextToTop()
-        }
+    func navigateToLocation(_ location: Int) {
+        preparePagesAndNavigateToLocation(location)
     }
 }
 
 extension ReadBookPresenter: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .red
-        return vc
+        let pageView = ReadBookRouter.createBookPageView()
+        readingPageInChapter -= 1
+        if readingPageInChapter < 0 {
+            readingPageInChapter += 1
+            return nil
+        }
+        pageView.page = readingPages[readingPageInChapter]
+        return pageView
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let page = currentPageItemView.page {
-            let pageView = ReadBookRouter.createBookPageView()
-            let newPage = getCurrentReadingPage()
-            pageView.page = newPage
-            readingChapter += 1
-            return pageView
-            
+        let pageView = ReadBookRouter.createBookPageView()
+        readingPageInChapter += 1
+        if readingPageInChapter > readingPages.count - 1 {
+            readingPageInChapter -= 1
+            return nil
         }
-        return nil
+        pageView.page = readingPages[readingPageInChapter]
+        return pageView
     }
 }
 

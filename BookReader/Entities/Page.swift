@@ -9,8 +9,11 @@ import Foundation
 
 struct Page {
     var range: NSRange
-    var index: Int
-    var startLocation: Int
-    var endLocation: Int
     var content: NSAttributedString
+    var chapterOffset: Int
+    var totalLocation: Int
+    
+    var locationInfoText: String {
+        return Utils.formatLocation(chapterOffset + range.location, total: totalLocation)
+    }
 }
